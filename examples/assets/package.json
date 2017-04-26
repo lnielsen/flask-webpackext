@@ -1,0 +1,51 @@
+{
+  "name": "flask-webpackext-example",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/inveniosoftware/flask-webpackext.git"
+  },
+  "description": "Flask-WebpackExt Example",
+  "author": "CERN <info@inveniosoftware.org>",
+  "private": true,
+  "scripts": {
+    "build": "node build/build.js"
+  },
+  "dependencies": {
+    "bootstrap-sass": "^3.3.7",
+    "jquery": "^3.2.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-eslint": "^7.2.3",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-istanbul": "^3.1.2",
+    "babel-plugin-transform-runtime": "^6.22.0",
+    "babel-preset-env": "^1.1.8",
+    "babel-preset-stage-2": "^6.22.0",
+    "babel-register": "^6.22.0",
+    "chalk": "^1.1.3",
+    "css-loader": "^0.28.0",
+    "eslint": "^3.19.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-friendly-formatter": "^2.0.7",
+    "eslint-loader": "^1.7.1",
+    "eslint-plugin-html": "^2.0.1",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-node": "^4.2.2",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "file-loader": "^0.11.1",
+    "node-sass": "^4.5.2",
+    "optimize-css-assets-webpack-plugin": "^1.3.1",
+    "ora": "^1.2.0",
+    "path": "^0.12.7",
+    "rimraf": "^2.6.1",
+    "sass-loader": "^6.0.3",
+    "url-loader": "^0.5.8",
+    "webpack": "^2.4.1",
+    "webpack-manifest-plugin": "^1.1.0",
+    "webpack-merge": "^4.1.0"
+  }
+}
