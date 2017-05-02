@@ -26,13 +26,33 @@
 
 from __future__ import absolute_import, print_function
 
-from werkzeug.local import LocalProxy
 from flask import current_app
+from markupsafe import Markup
+from pywebpack import Manifest, ManifestEntry, ManifestLoader
 
-current_webpack = LocalProxy(
-    lambda: current_app.extensions['flask-webpackext'])
-"""Proxy to current extension."""
 
-current_manifest = LocalProxy(
-    lambda: current_app.extensions['flask-webpackext'].manifest)
-"""Proxy to current manifest."""
+class JinjaManifestEntry(ManifestEntry):
+    """Manifest entry which marks rendered strings as safe for Jinja."""
+
+    def __html__(self):
+        """Ensures that string is not escaped when included in Jinja."""
+        return Markup(self.render())
+
+
+class JinjaManifestLoader(ManifestLoader):
+    """Factory which uses the Jinja manifest entry."""
+    cache = {}
+
+    def __init__(self, manifest_cls=Manifest, entry_cls=JinjaManifestEntry):
+        """Initialize manifest loader."""
+        super(JinjaManifestLoader, self).__init__(
+            manifest_cls=manifest_cls,
+            entry_cls=entry_cls
+        )
+
+    def load(self, filepath):
+        """Load a manifest from a file."""
+        if current_app.debug or filepath not in JinjaManifestLoader.cache:
+            JinjaManifestLoader.cache[filepath] = \
+                super(JinjaManifestLoader, self).load(filepath)
+        return JinjaManifestLoader.cache[filepath]

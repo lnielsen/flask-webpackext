@@ -24,12 +24,12 @@
 
 """Webpack integration for Flask."""
 
-from pywebpack import ManifestLoader
+from .manifest import JinjaManifestLoader
 
-WEBPACKEXT_MANIFEST_LOADER = ManifestLoader
-"""Manifest loader."""
+WEBPACKEXT_MANIFEST_LOADER = JinjaManifestLoader
+"""Manifest loader use to load manfest."""
 
-WEBPACKEXT_MANIFEST_PATH = 'manifest.json'
+WEBPACKEXT_MANIFEST_PATH = 'dist/manifest.json'
 """Path to manifest file relative to static folder."""
 
 WEBPACKEXT_PROJECT = None

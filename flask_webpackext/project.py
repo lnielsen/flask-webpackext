@@ -37,13 +37,21 @@ from .proxies import current_webpack
 
 def flask_config():
     """Flask configuration injected in Webpack."""
+    assets_url = current_app.config['WEBPACKEXT_PROJECT_DISTURL']
+    if assets_url[-1] != '/':
+        assets_url += '/'
+    static_url = current_app.static_url_path
+    if static_url[-1] != '/':
+        static_url += '/'
+
     return {
         'build': {
             'debug': current_app.debug,
+            'context': current_webpack.project.path,
             'assetsPath': current_app.config['WEBPACKEXT_PROJECT_DISTDIR'],
-            'assetsURL': current_app.config['WEBPACKEXT_PROJECT_DISTURL'],
+            'assetsURL': assets_url,
             'staticPath': current_app.static_folder,
-            'staticURL': current_app.static_url_path,
+            'staticURL': static_url,
         }
     }
 

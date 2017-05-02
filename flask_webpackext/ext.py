@@ -33,6 +33,7 @@ from werkzeug.utils import import_string
 
 from . import config
 from ._compat import string_types
+from .proxies import current_manifest
 
 
 class FlaskWebpackExt(object):
@@ -46,6 +47,7 @@ class FlaskWebpackExt(object):
     def init_app(self, app):
         """Flask application initialization."""
         self.init_config(app)
+        app.add_template_global(current_manifest, name='webpack')
         app.extensions['flask-webpackext'] = _FlaskWebpackExtState(app)
 
     def init_config(self, app):
@@ -92,7 +94,7 @@ class _FlaskWebpackExtState(object):
         """Manifest."""
         path = self.app.config['WEBPACKEXT_MANIFEST_PATH']
         if path:
-            return self.manifest_loader.load(
+            return self.manifest_loader().load(
                 join(self.app.static_folder, path))
         return path
 

@@ -33,7 +33,7 @@ from flask.cli import with_appcontext
 from flask_webpackext import current_webpack
 
 
-@click.group()
+@click.group(chain=True)
 @with_appcontext
 def webpack():
     """Webpack commands."""
@@ -41,36 +41,54 @@ def webpack():
 
 @webpack.command()
 @with_appcontext
-def check():
-    """Check if NPM and Webpack are installed."""
-
-
-@webpack.command()
-@with_appcontext
 def create():
     """Create webpack project."""
     current_webpack.project.create()
+    click.secho('Created webpack project.', fg='green')
 
 
 @webpack.command()
 @with_appcontext
-def install():
-    """Install webpack project assets."""
+def clean():
+    """Remove created webpack project."""
+    current_webpack.project.clean()
 
 
-@webpack.command()
+@webpack.command(context_settings={'ignore_unknown_options': True})
+@click.argument('args', nargs=-1, type=click.UNPROCESSED)
 @with_appcontext
-def build():
-    """Build webpack project."""
+def install(args):
+    """Run NPM install."""
+    current_webpack.project.install(*args)
+    click.secho('Installed webpack project.', fg='green')
+
+
+@webpack.command(context_settings={'ignore_unknown_options': True})
+@click.argument('args', nargs=-1, type=click.UNPROCESSED)
+@with_appcontext
+def build(args):
+    """Run NPM build-script."""
+    current_webpack.project.build(*args)
+    click.secho('Built webpack project.', fg='green')
 
 
 @webpack.command()
 @with_appcontext
 def buildall():
     """Create, install and build webpack project."""
+    current_webpack.project.buildall()
+    click.secho('Created, installed and built webpack project.', fg='green')
 
 
-@webpack.command()
+@webpack.command(context_settings={'ignore_unknown_options': True})
+@click.argument('script')
+@click.argument('args', nargs=-1, type=click.UNPROCESSED)
 @with_appcontext
-def run():
+def run(script, args):
     """Run an NPM script."""
+    try:
+        current_webpack.project.run(script, *args)
+        click.secho('Executed NPM script "{}".'.format(script), fg='green')
+    except RuntimeError:
+        click.secho(
+            'Error: Invalid script name "{}".'.format(script), fg='red')

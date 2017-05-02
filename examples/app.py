@@ -24,15 +24,14 @@
 
 """Minimal Flask application example.
 
-First install Flask-WebpackExt, setup the application and load
-fixture data by running:
+First install Flask-WebpackExt, create the instance folder and export
+environment variables:
 
 .. code-block:: console
 
    $ pip install -e .[all]
    $ cd examples
-   $ ./app-setup.sh
-   $ ./app-fixtures.sh
+   $ mkdir instance
    $ export FLASK_APP=app.py FLASK_DEBUG=1
 
 Next, install and build the assets with webpack:
@@ -62,7 +61,7 @@ To reset the example application run:
 
 from __future__ import absolute_import, print_function
 
-from flask import Flask
+from flask import Flask, render_template
 
 from flask_webpackext import FlaskWebpackExt, WebpackProject
 
@@ -77,6 +76,7 @@ project = WebpackProject(
 app = Flask(__name__, template_folder='templates')
 app.config.update(dict(
     WEBPACKEXT_PROJECT=project,
+    # WEBPACKEXT_STORAGE_CLS='pywebpack:LinkStorage',
 ))
 
 # Initialize extension
