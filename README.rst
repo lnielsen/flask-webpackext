@@ -19,8 +19,6 @@
 
 Webpack integration for Flask.
 
-*This is an experimental developer preview release.*
-
 Flask-WebpackExt makes it easy to interface with your existing Webpack project
 from Flask and does not try to manage Webpack for you. Flask-WebpackExt does
 this via:
